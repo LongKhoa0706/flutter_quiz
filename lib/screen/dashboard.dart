@@ -27,8 +27,9 @@ class _DashboardState extends State<Dashboard> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
+        backgroundColor: Colors.white,
         selectedItemColor: kItemSelectBottomNav,
-
+        elevation: 5.0,
         unselectedItemColor: kItemUnSelectBottomNav,
         onTap: (index){
           setState(() {

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutterquiz/provider/question_provider.dart';
 import 'package:flutterquiz/screen/dashboard.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+void main() {runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (BuildContext context) => QuestionProvider() ,
+      )
+    ],
+      child: MyApp(),
+    )
+);
+
 }
 
 class MyApp extends StatelessWidget {

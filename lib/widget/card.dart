@@ -8,13 +8,10 @@ class CardItem extends StatelessWidget {
   
   const CardItem({Key key, @required this.index}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-
-
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -28,7 +25,7 @@ class CardItem extends StatelessWidget {
               offset: Offset(-3, 0),
               blurRadius: 15,
               color: Color(0xffb8bfce).withOpacity(.1),
-            )
+            ),
           ],
         ),
         child: Column(
