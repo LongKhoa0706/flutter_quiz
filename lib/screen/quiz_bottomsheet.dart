@@ -85,12 +85,12 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
             Center(
               child:  Consumer<QuestionProvider>(
                 builder: (BuildContext context, QuestionProvider value, Widget child) {
-                  return  RaisedButton(
+                  return value.isLoading  ? CircularProgressIndicator() :  RaisedButton(
                     color: kItemSelectBottomNav,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)
                     ),
-                    onPressed: ()  => _startQuiz(value),
+                    onPressed: ()  =>  _startQuiz(value),
                     child: Text("Start Quiz",
                       style: kHeadingTextStyleAppBar.copyWith(
                         color: Colors.white,
@@ -175,9 +175,12 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
   }
 
   _startQuiz(QuestionProvider value) async {
-    if (  selectDifficult != null && selectNumber != null  ) {// isfinite == is not empty
+    value.isLoading = true;
+    if (  selectDifficult != null && selectNumber != null  ) {//
+      print('dang khoi tai progrs');
       List<Question> listQuestion =  await value.getDataQuestion(selectDifficult.toLowerCase(), selectNumber, widget.id);
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizScreen(difficult: selectDifficult ,id: widget.id,listQuestion: listQuestion,)));
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,id: widget.id,listQuestion: listQuestion,)));
+      print('ket thuc proess');
     }else{
       final snackBar = SnackBar(
         duration: Duration(milliseconds: 800),

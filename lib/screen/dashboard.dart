@@ -4,13 +4,13 @@ import 'package:flutterquiz/screen/scorescreen.dart';
 import 'package:flutterquiz/util/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Dashboard extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardPageState extends State<DashboardPage> {
   int currentIndex = 0 ;
   
   List<Widget> listScreen = [

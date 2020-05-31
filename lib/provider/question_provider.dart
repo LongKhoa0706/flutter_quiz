@@ -1,16 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterquiz/model/categories.dart';
 import 'package:flutterquiz/model/question.dart';
 import 'package:flutterquiz/service/api_service.dart';
-import 'package:provider/provider.dart';
+
 
 class QuestionProvider with ChangeNotifier {
   var api = API_Service();
   List<Question> listQuestion = [];
-  bool _isLoading = true;
-  bool get isLoading => _isLoading;
-
+  bool isLoading = false;
+  String error = '';
   int currentIndex = 0;
 
   Map<int,dynamic> answer = {};
@@ -19,6 +17,8 @@ class QuestionProvider with ChangeNotifier {
   Future<List<Question>> getDataQuestion(String difficulty,int totalQuestion,int categoriesId) async {
     String url = "${api.baseURL}?amount=$totalQuestion&category=$categoriesId&difficulty=$difficulty";
     var dio = Dio();
+    print("dang load");
+    isLoading = true;
     var res = await dio.get(url);
     if (res.statusCode == 200) {
       var jsonData = res.data;
@@ -26,25 +26,25 @@ class QuestionProvider with ChangeNotifier {
         listQuestion.add(Question.fromJson(i));
       }
     }
-    _isLoading =false;
+    isLoading =false;
+    print('load xong');
+
     notifyListeners();
+    dio.close();
     return listQuestion;
   }
 
   void selectRadio(dynamic e){
       answer[currentIndex] = e;
-      print(currentIndex);
       notifyListeners();
+      return;
   }
 
-  void submitQuiz(List<Question> listQuestion){
-    notifyListeners();
+  Future<void> submitQuiz(List<Question> listQuestion) {
     if (currentIndex < (listQuestion.length - 1) ) {
       currentIndex ++;
       notifyListeners();
     }
     notifyListeners();
   }
-
-
 }
