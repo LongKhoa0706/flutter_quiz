@@ -17,6 +17,7 @@ class QuizPage extends StatefulWidget {
   final int id;
   final String difficult;
 
+
   const QuizPage({Key key, @required this.listQuestion, @required this.id, @required this.difficult}) : super(key: key);
 
   @override

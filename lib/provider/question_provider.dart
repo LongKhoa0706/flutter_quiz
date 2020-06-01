@@ -10,14 +10,13 @@ class QuestionProvider with ChangeNotifier {
   bool isLoading = false;
   String error = '';
   int currentIndex = 0;
-
   Map<int,dynamic> answer = {};
 
 
   Future<List<Question>> getDataQuestion(String difficulty,int totalQuestion,int categoriesId) async {
+
     String url = "${api.baseURL}?amount=$totalQuestion&category=$categoriesId&difficulty=$difficulty";
     var dio = Dio();
-    print("dang load");
     isLoading = true;
     var res = await dio.get(url);
     if (res.statusCode == 200) {
@@ -26,11 +25,10 @@ class QuestionProvider with ChangeNotifier {
         listQuestion.add(Question.fromJson(i));
       }
     }
+
     isLoading =false;
     print('load xong');
-
     notifyListeners();
-    dio.close();
     return listQuestion;
   }
 

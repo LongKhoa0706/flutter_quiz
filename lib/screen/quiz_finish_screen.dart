@@ -4,7 +4,9 @@ import 'package:flutterquiz/provider/score_provider.dart';
 import 'package:flutterquiz/screen/dashboard.dart';
 import 'package:flutterquiz/screen/dialog_save_score.dart';
 import 'package:flutterquiz/screen/homes_creen.dart';
+import 'package:flutterquiz/screen/show_question_screen.dart';
 import 'package:flutterquiz/util/constant.dart';
+import 'package:flutterquiz/widget/button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -203,28 +205,13 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                   ),
                   SizedBox(
                     width: 280,
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey[100],
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 5,
-                            offset: Offset(5.0,5.0),
-                             color: Colors.grey[200],
-                          ),
-                          BoxShadow(
-                            blurRadius: 10,
-                            offset: Offset(3.0,3.0),
-                            color: Colors.grey[300],
-                          ),
-                        ]
-                      ),
-                      child: Center(
-                        child: Text("Show Question",
-                        ),
-                      ),
+                    child: Button(
+                        title: 'Show Question',
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=>ShowQuestionScreen(
+                            answer: widget.answer,
+                            listQuestion: widget.listQuestion,)));
+                        },
                     ),
                   ),
 
@@ -233,34 +220,23 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                   ),
                   SizedBox(
                     width: 280,
-                    child: InkWell(
-                      onTap: (){
-                        _buildDialogSaveScore();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey[100],
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5,
-                                offset: Offset(5.0,5.0),
-                                color: Colors.grey[200],
-                              ),
-                              BoxShadow(
-                                blurRadius: 10,
-                                offset: Offset(3.0,3.0),
-                                color: Colors.grey[300],
-                              ),
-                            ]
-                        ),
-                        child: Center(
-                          child: Text("Save Score"),
-                        ),
-                      ),
-                    ),
-                  )
+                    child: Button(
+                        title: 'Save Score',
+                        onTap: (){
+                          _buildDialogSaveScore();
+                        })
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      width: 280,
+                      child: Button(
+                          title: 'Home',
+                          onTap: (){
+                            Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_)=>DashboardPage()), (e) => false);
+                          })
+                  ),
                 ],
               ),
             ),
@@ -333,7 +309,6 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                       ),
                       color: kItemSelectBottomNav,
                       onPressed: () {
-
                       },
                       child: Text('Cancel',
                       style: TextStyle(
@@ -344,6 +319,7 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                         onPressed: () async {
                          await  Provider.of<ScoreProvider>(context,listen: false).addScore(nameController.text,
                               widget.title, score);
+//                         widget.listQuestion.clear();
                          Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_)=>DashboardPage()), (e) => false);                        },
                         child: Text("Save"),
                     ),

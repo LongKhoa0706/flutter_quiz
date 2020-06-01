@@ -178,9 +178,12 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
     value.isLoading = true;
     if (  selectDifficult != null && selectNumber != null  ) {//
       print('dang khoi tai progrs');
+
       List<Question> listQuestion =  await value.getDataQuestion(selectDifficult.toLowerCase(), selectNumber, widget.id);
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,id: widget.id,listQuestion: listQuestion,)));
-      print('ket thuc proess');
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,
+        id: widget.id,
+        listQuestion: listQuestion,),),);
+
     }else{
       final snackBar = SnackBar(
         duration: Duration(milliseconds: 800),
