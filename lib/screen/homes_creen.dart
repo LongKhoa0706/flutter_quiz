@@ -6,10 +6,22 @@ import 'package:flutterquiz/util/constant.dart';
 import 'package:flutterquiz/widget/card.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<QuestionProvider>(context,listen: false).initValue();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -75,6 +87,7 @@ class HomeScreen extends StatelessWidget {
       )
     );
   }
+
   _buildBottomSheet(BuildContext context,String title,IconData icon,int id){
       return showModalBottomSheet(
           shape: RoundedRectangleBorder(

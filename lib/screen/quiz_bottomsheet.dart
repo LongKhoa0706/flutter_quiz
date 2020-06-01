@@ -85,7 +85,7 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
             Center(
               child:  Consumer<QuestionProvider>(
                 builder: (BuildContext context, QuestionProvider value, Widget child) {
-                  return value.isLoading  ? CircularProgressIndicator() :  RaisedButton(
+                  return RaisedButton(
                     color: kItemSelectBottomNav,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)
@@ -175,11 +175,12 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
   }
 
   _startQuiz(QuestionProvider value) async {
-    value.isLoading = true;
     if (  selectDifficult != null && selectNumber != null  ) {//
       print('dang khoi tai progrs');
 
       List<Question> listQuestion =  await value.getDataQuestion(selectDifficult.toLowerCase(), selectNumber, widget.id);
+      Provider.of<QuestionProvider>(context,listen: false).initValue();
+
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,
         id: widget.id,
         listQuestion: listQuestion,),),);

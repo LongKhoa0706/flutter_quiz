@@ -6,12 +6,21 @@ import 'package:flutterquiz/service/api_service.dart';
 
 class QuestionProvider with ChangeNotifier {
   var api = API_Service();
-  List<Question> listQuestion = [];
-  bool isLoading = false;
-  String error = '';
-  int currentIndex = 0;
-  Map<int,dynamic> answer = {};
+  List<Question> listQuestion;
+  bool isLoading;
+  String error;
+  int currentIndex;
+  Map<int,dynamic> answer;
 
+  void initValue(){
+    api = API_Service();
+    listQuestion = [];
+     isLoading = false;
+     error = '';
+     print('khoi tao value');
+     currentIndex = 0;
+    answer = {};
+  }
 
   Future<List<Question>> getDataQuestion(String difficulty,int totalQuestion,int categoriesId) async {
 
@@ -45,4 +54,6 @@ class QuestionProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
 }
