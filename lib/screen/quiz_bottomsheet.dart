@@ -3,6 +3,7 @@ import 'package:flutterquiz/model/question.dart';
 import 'package:flutterquiz/provider/question_provider.dart';
 import 'package:flutterquiz/screen/quiz_screen.dart';
 import 'package:flutterquiz/util/constant.dart';
+import 'package:flutterquiz/widget/snackbar.dart';
 import 'package:provider/provider.dart';
 
 class QuizBottomSheet extends StatefulWidget {
@@ -85,7 +86,7 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
             Center(
               child:  Consumer<QuestionProvider>(
                 builder: (BuildContext context, QuestionProvider value, Widget child) {
-                  return RaisedButton(
+                  return value.isLoading ? CircularProgressIndicator() : RaisedButton(
                     color: kItemSelectBottomNav,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)
@@ -169,22 +170,29 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
         ),
         child: Center(child: Text(difficult, style: selectDifficult == difficult
             ? TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-            : TextStyle(color: Colors.black),),),
+            : TextStyle(color: Colors.black),
+        ),
+        ),
       ),
     );
   }
 
   _startQuiz(QuestionProvider value) async {
     if (  selectDifficult != null && selectNumber != null  ) {//
-      print('dang khoi tai progrs');
-
+      value.isLoadingg(false);
       List<Question> listQuestion =  await value.getDataQuestion(selectDifficult.toLowerCase(), selectNumber, widget.id);
       Provider.of<QuestionProvider>(context,listen: false).initValue();
-
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,
-        id: widget.id,
-        listQuestion: listQuestion,),),);
-
+      if (listQuestion.length == 0 ) {
+        final snackBar = SnackBar(content: Text("Not found question"));
+        globalKey.currentState.showSnackBar(snackBar);
+      }else{
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,
+          id: widget.id,
+          listQuestion: listQuestion,
+        ),
+        ),
+        );
+      }
     }else{
       final snackBar = SnackBar(
         duration: Duration(milliseconds: 800),

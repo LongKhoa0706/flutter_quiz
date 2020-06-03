@@ -27,16 +27,25 @@ class QuestionProvider with ChangeNotifier {
     String url = "${api.baseURL}?amount=$totalQuestion&category=$categoriesId&difficulty=$difficulty";
     var dio = Dio();
     isLoading = true;
-    var res = await dio.get(url);
-    if (res.statusCode == 200) {
-      var jsonData = res.data;
-      for(var i in jsonData['results']){
-        listQuestion.add(Question.fromJson(i));
+    print(url);
+    try {
+      var res = await dio.get(url);
+      if (res.statusCode == 200) {
+        var jsonData = res.data;
+        for (var i in jsonData['results']) {
+          listQuestion.add(Question.fromJson(i));
+        }
       }
+      if (res.statusCode == 1) {
+
+      }
+    } on DioError catch (e){
+      print(e.error);
+      print(e.request);
+      print(e.type);
     }
 
     isLoading =false;
-    print('load xong');
     notifyListeners();
     return listQuestion;
   }
@@ -55,5 +64,8 @@ class QuestionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
+  void isLoadingg(bool status){
+    isLoading = status;
+    notifyListeners();
+  }
 }

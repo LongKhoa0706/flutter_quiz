@@ -121,8 +121,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                     percent: (value.arrScore[index].score * 1.0) / 100,
                                     animationDuration: 1200,
                                     circularStrokeCap: CircularStrokeCap.round,
-                                    center: new Text(value.arrScore[index].score.toString() + "%"),
-                                    progressColor: value.arrScore[index].score > 30 ? Colors.red : kItemSelectBottomNav,
+                                    center:  Text(value.arrScore[index].score.toString() + "%"),
+                                    progressColor: conditionalolor(value, index),
                                   )
                                 ],
                               ),
@@ -140,4 +140,14 @@ class _ScoreScreenState extends State<ScoreScreen> {
       ),
     );
   }
+
+  Color conditionalolor(ScoreProvider value,int index){
+    if (value.arrScore[index].score <=10 ) {
+      return Colors.red;
+    }
+    if (value.arrScore[index].score >=70 ) {
+      return Colors.green;
+    }
+ }
+
 }
