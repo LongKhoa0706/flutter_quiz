@@ -59,6 +59,29 @@ flutter:
     - ballon2.png
     - ballon4.png
     - congratulate.png
+    - assets/topic/image1.jpg
+    - assets/topic/image2.jpg
+    - assets/topic/image3.jpg
+    - assets/topic/image4.jpg
+    - assets/topic/image5.jpg
+    - assets/topic/image6.jpg
+    - assets/topic/image7.jpg
+    - assets/topic/image8.jpg
+    - assets/topic/image9.jpg
+    - assets/topic/image10.jpg
+    - assets/topic/image11.jpg
+    - assets/topic/image12.jpg
+    - assets/topic/image13.jpg
+    - assets/topic/image14.jpg
+    - assets/topic/image15.jpg
+    - assets/topic/image16.jpg
+    - assets/topic/image17.jpg
+    - assets/topic/image18.jpg
+    - assets/topic/image19.jpg
+    - assets/topic/image20.jpg
+    - assets/topic/image21.jpg
+    - assets/topic/image22.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

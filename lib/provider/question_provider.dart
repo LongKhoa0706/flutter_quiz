@@ -17,7 +17,6 @@ class QuestionProvider with ChangeNotifier {
     listQuestion = [];
      isLoading = false;
      error = '';
-     print('khoi tao value');
      currentIndex = 0;
     answer = {};
   }
@@ -27,7 +26,6 @@ class QuestionProvider with ChangeNotifier {
     String url = "${api.baseURL}?amount=$totalQuestion&category=$categoriesId&difficulty=$difficulty";
     var dio = Dio();
     isLoading = true;
-    print(url);
     try {
       var res = await dio.get(url);
       if (res.statusCode == 200) {
@@ -54,6 +52,11 @@ class QuestionProvider with ChangeNotifier {
       answer[currentIndex] = e;
       notifyListeners();
       return;
+  }
+
+  void selectQuestion(dynamic e){
+    currentIndex = e;
+    notifyListeners();
   }
 
   Future<void> submitQuiz(List<Question> listQuestion) {

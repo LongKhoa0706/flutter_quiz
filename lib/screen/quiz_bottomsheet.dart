@@ -8,10 +8,11 @@ import 'package:provider/provider.dart';
 
 class QuizBottomSheet extends StatefulWidget {
   final String title;
-  final IconData iconData;
   final int id;
 
-  const QuizBottomSheet({Key key, @required this.title, @required this.iconData, this.id}) : super(key: key);
+  const QuizBottomSheet(
+      {Key key, @required this.title, this.id})
+      : super(key: key);
 
   @override
   _QuizBottomSheetState createState() => _QuizBottomSheetState();
@@ -29,22 +30,21 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
       key: globalKey,
       backgroundColor: Colors.transparent,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Icon(widget.iconData),
-            Text(widget.title,
+            Text(
+              widget.title,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold
-              ),
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 20,
@@ -79,36 +79,38 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
                 _buildDifficultQuestion("Hard"),
               ],
             ),
-
             const SizedBox(
               height: 30,
             ),
-            Center(
-              child:  Consumer<QuestionProvider>(
-                builder: (BuildContext context, QuestionProvider value, Widget child) {
-                  return value.isLoading ? CircularProgressIndicator() : RaisedButton(
-                    color: kItemSelectBottomNav,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    onPressed: ()  =>  _startQuiz(value),
-                    child: Text("Start Quiz",
-                      style: kHeadingTextStyleAppBar.copyWith(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  );
-                },
-              )
-            ),
+            Center(child: Consumer<QuestionProvider>(
+              builder: (BuildContext context, QuestionProvider value, Widget child) {
+                return value.isLoading
+                    ? CircularProgressIndicator()
+                    : Visibility(
+                      visible: value.isLoading ? false : true,
+                      child: RaisedButton(
+                          color: kItemSelectBottomNav,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          onPressed: () => _startQuiz(value),
+                          child: Text(
+                            "Start Quiz",
+                            style: kHeadingTextStyleAppBar.copyWith(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                    );
+              },
+            )),
           ],
         ),
       ),
     );
   }
 
-  _buildNumberQuestion(int number){
+  _buildNumberQuestion(int number) {
     return InkWell(
       onTap: () {
         setState(() {
@@ -131,12 +133,14 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
               color: Color(0xffb8bfce).withOpacity(.1),
             ),
           ],
-          color: selectNumber == number ? kItemSelectBottomNav : Colors.grey[200],
+          color:
+              selectNumber == number ? kItemSelectBottomNav : Colors.grey[200],
         ),
-        child: Text(number.toString(),
-            style: selectNumber == number
-                ? TextStyle(color: Colors.white,fontWeight: FontWeight.bold)
-                : TextStyle(color: Colors.black),
+        child: Text(
+          number.toString(),
+          style: selectNumber == number
+              ? TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+              : TextStyle(color: Colors.black),
         ),
       ),
     );
@@ -144,7 +148,7 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
 
   _buildDifficultQuestion(String difficult) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         setState(() {
           selectDifficult = difficult;
         });
@@ -165,40 +169,52 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
               color: Color(0xffb8bfce).withOpacity(.1),
             ),
           ],
-          color: selectDifficult == difficult ? kItemSelectBottomNav : Colors.grey[200],
+          color: selectDifficult == difficult
+              ? kItemSelectBottomNav
+              : Colors.grey[200],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(child: Text(difficult, style: selectDifficult == difficult
-            ? TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-            : TextStyle(color: Colors.black),
-        ),
+        child: Center(
+          child: Text(
+            difficult,
+            style: selectDifficult == difficult
+                ? TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                : TextStyle(color: Colors.black),
+          ),
         ),
       ),
     );
   }
 
   _startQuiz(QuestionProvider value) async {
-    if (  selectDifficult != null && selectNumber != null  ) {//
+    if (selectDifficult != null && selectNumber != null) {
       value.isLoadingg(false);
-      List<Question> listQuestion =  await value.getDataQuestion(selectDifficult.toLowerCase(), selectNumber, widget.id);
-      Provider.of<QuestionProvider>(context,listen: false).initValue();
-      if (listQuestion.length == 0 ) {
+      List<Question> listQuestion = await value.getDataQuestion(
+          selectDifficult.toLowerCase(), selectNumber, widget.id);
+      Provider.of<QuestionProvider>(context, listen: false).initValue();
+      if (listQuestion.length == 0) {
         final snackBar = SnackBar(content: Text("Not found question"));
         globalKey.currentState.showSnackBar(snackBar);
-      }else{
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuizPage(difficult: selectDifficult ,
-          id: widget.id,
-          listQuestion: listQuestion,
-        ),
-        ),
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => QuizPage(
+              difficult: selectDifficult,
+              id: widget.id,
+              listQuestion: listQuestion,
+            ),
+          ),
         );
       }
-    }else{
+    } else {
       final snackBar = SnackBar(
         duration: Duration(milliseconds: 800),
         elevation: 5.0,
-        content: Text('Please choose option!',
-      ),);
+        content: Text(
+          'Please choose option!',
+        ),
+      );
       globalKey.currentState.showSnackBar(snackBar);
     }
   }

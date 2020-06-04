@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterquiz/screen/homes_creen.dart';
+import 'package:flutterquiz/screen/homes_screen.dart';
 import 'package:flutterquiz/screen/scorescreen.dart';
 import 'package:flutterquiz/util/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

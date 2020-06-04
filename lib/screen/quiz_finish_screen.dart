@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterquiz/model/question.dart';
 import 'package:flutterquiz/provider/score_provider.dart';
 import 'package:flutterquiz/screen/dashboard.dart';
-import 'package:flutterquiz/screen/dialog_save_score.dart';
-import 'package:flutterquiz/screen/homes_creen.dart';
+
+import 'package:flutterquiz/screen/homes_screen.dart';
 import 'package:flutterquiz/screen/show_question_screen.dart';
 import 'package:flutterquiz/util/constant.dart';
 import 'package:flutterquiz/widget/button.dart';
@@ -49,12 +49,8 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
   }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-
-        ),
         child: Stack(
           children: <Widget>[
             Positioned(
@@ -129,7 +125,6 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                         "Your Score : ",
                         style: kHeadingTextStyleAppBar.copyWith(
                           fontSize: 24,
-
                         ),
                       ),
                       Text(
@@ -255,7 +250,7 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
           insetAnimationDuration:
           const Duration(milliseconds: 100),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(10),),
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
             width: double.infinity,
@@ -319,7 +314,6 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                         onPressed: () async {
                          await  Provider.of<ScoreProvider>(context,listen: false).addScore(nameController.text,
                               widget.title, score);
-//                         widget.listQuestion.clear();
                          Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_)=>DashboardPage()), (e) => false);                        },
                         child: Text("Save"),
                     ),

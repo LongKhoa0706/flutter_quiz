@@ -11,29 +11,35 @@ class CardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+        width: double.infinity,
+        height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(4, 4),
-              blurRadius: 10,
-              color: Colors.grey.withOpacity(.3),
-            ),
-            BoxShadow(
-              offset: Offset(-3, 0),
-              blurRadius: 15,
-              color: Color(0xffb8bfce).withOpacity(.1),
-            ),
-          ],
+          image: DecorationImage(
+            image: AssetImage(categories[index].image),
+            fit: BoxFit.cover
+          )
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: <Widget>[
-            Icon(categories[index].icon),
-            Text(categories[index].name,style: kHeadingTextStyleAppBar.copyWith(fontSize: 18),),
+            Container(
+              width: double.infinity,
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  categories[index].name,
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       );
