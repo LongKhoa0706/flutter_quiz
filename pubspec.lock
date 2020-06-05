@@ -130,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.12"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.1"
   matcher:
     dependency: transitive
     description:
@@ -215,7 +222,7 @@ packages:
     source: hosted
     version: "1.1.2"
   simple_animations:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: simple_animations
       url: "https://pub.dartlang.org"

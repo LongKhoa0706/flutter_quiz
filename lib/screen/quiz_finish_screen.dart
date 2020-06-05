@@ -7,7 +7,9 @@ import 'package:flutterquiz/screen/homes_screen.dart';
 import 'package:flutterquiz/screen/show_question_screen.dart';
 import 'package:flutterquiz/util/constant.dart';
 import 'package:flutterquiz/widget/button.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class QuizFinishPage extends StatefulWidget {
@@ -38,6 +40,7 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initializeDateFormatting();
     widget.answer.forEach((key, value) {
       if (widget.listQuestion[key].correctAnswer == value) {
         correct ++;
@@ -50,6 +53,7 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         child: Stack(
           children: <Widget>[
@@ -109,7 +113,6 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
             ),
             Positioned(
               child: Column(
-
                 children: <Widget>[
                   const SizedBox(
                     height: 40,
@@ -311,10 +314,7 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
                       ),),
                     ),
                     FlatButton(
-                        onPressed: () async {
-                         await  Provider.of<ScoreProvider>(context,listen: false).addScore(nameController.text,
-                              widget.title, score);
-                         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_)=>DashboardPage()), (e) => false);                        },
+                        onPressed: ()  => _saveScore(),
                         child: Text("Save"),
                     ),
                   ],
@@ -325,5 +325,12 @@ class _QuizFinishPageState extends State<QuizFinishPage> {
         );
       },
     );
+   }
+   _saveScore() async {
+      var now =  DateTime.now();
+     String datetime =  DateFormat.yMd().format(now);
+     await Provider.of<ScoreProvider>(context,listen: false).addScore(nameController.text,
+       widget.title, score,datetime ,correct,widget.listQuestion.length);
+     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_)=>DashboardPage()), (e) => false);
    }
 }

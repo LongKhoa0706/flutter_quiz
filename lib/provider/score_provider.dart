@@ -7,12 +7,11 @@ import 'package:provider/provider.dart';
 class ScoreProvider with ChangeNotifier{
 
   DbManger dbManger = DbManger();
-
   List<Score> arrScore = [];
 
 
-  Future<Score> addScore(String nameUser,String categories,int scoree) async{
-    Score score = Score(nameUser: nameUser,categories: categories,score: scoree);
+  Future<Score> addScore(String nameUser,String categories,int scoree,String date, int totalAnswer, int totalQuestion) async{
+    Score score = Score(nameUser: nameUser,categories: categories,score: scoree,date: date,totalAnswer: totalAnswer,totalQuestion: totalQuestion);
     await dbManger.addUserScore(score);
     notifyListeners();
     return score;

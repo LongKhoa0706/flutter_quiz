@@ -125,14 +125,25 @@ class _QuizPageState extends State<QuizPage> {
                                     physics: BouncingScrollPhysics(),
                                     child: InkWell(
                                       onTap: (){
-                                        value.selectQuestion(e);
+                                       value.selectQuestion(e);
                                       },
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 10,right: 10),
-                                        child: Text(
-                                          e.toString(),
-                                          style: TextStyle(
-                                              color: Colors.white
+                                        padding: EdgeInsets.only(left: 15,right: 10),
+                                        child: Container(
+                                          width: 20,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: value.currentIndex == e ? Colors.grey[200] : Color(0xff7146ff),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              e.toString(),
+                                              style: TextStyle(
+                                                  color: value.currentIndex == e ? Colors.black : Colors.white,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -191,7 +202,7 @@ class _QuizPageState extends State<QuizPage> {
                                           value.selectRadio(e);
                                         },
                                         value: e,
-                                      )
+                                      ),
                                   ),
                                 ],
                               ) ,

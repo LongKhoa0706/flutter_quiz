@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterquiz/util/constant.dart';
 
  buildDialog(BuildContext context,String title,String message, DialogType dialogType,GestureTapCallback onTap){
-
    return AwesomeDialog(context: context,
        dialogType: dialogType,
        animType: AnimType.BOTTOMSLIDE,

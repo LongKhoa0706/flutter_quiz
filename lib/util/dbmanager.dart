@@ -14,7 +14,7 @@ class DbManger{
   }
 
   Future initDatabase(Database database,int version) async {
-    await database.execute('CREATE TABLE score(id INTEGER PRIMARY KEY AUTOINCREMENT, nameUser TEXT , categories TEXT, score INTEGER )');
+    await database.execute('CREATE TABLE score(id INTEGER PRIMARY KEY AUTOINCREMENT, nameUser TEXT , categories TEXT, score INTEGER, date TEXT, totalAnswer INTEGER, totalQuestion INTEGER )');
   }
 
   Future<int> addUserScore(Score score) async{

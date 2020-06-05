@@ -11,10 +11,6 @@ class ShowQuestionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> listChooseQuestion = [];
-
-
-
     return Scaffold(
         appBar: AppBar(
           title: Text("Show Question"),
@@ -89,7 +85,7 @@ class ShowQuestionScreen extends StatelessWidget {
                               ),
                               Padding(
                                 child: Text(
-                                  answer[index]  ,
+                                   answer[index] == null ? "" : answer[index],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: correct ? Colors.green : Colors.red,
@@ -136,4 +132,5 @@ class ShowQuestionScreen extends StatelessWidget {
       ),
     );
   }
+
 }
