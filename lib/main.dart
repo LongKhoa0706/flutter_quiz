@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Router.generateRouter,
-      initialRoute: DashBoardScreen,
+      initialRoute: SplashScreen,
     );
   }
 }

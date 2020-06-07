@@ -39,7 +39,7 @@ class _DashboardPageState extends State<DashboardPage> {
         },
         items: <BottomNavigationBarItem>[
           _buildItemBottomNav(FontAwesomeIcons.home, "Home"),
-          _buildItemBottomNav(FontAwesomeIcons.history,"Score" )
+          _buildItemBottomNav(FontAwesomeIcons.history,"Point" )
         ],
         
       ),
@@ -48,7 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
   _buildItemBottomNav(IconData icon, String title){
       return BottomNavigationBarItem(
         icon: Icon(icon),
-        title: Text(title),
+        title: Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
       )    ;
   }
 }

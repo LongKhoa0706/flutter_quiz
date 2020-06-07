@@ -26,6 +26,7 @@ class QuestionProvider with ChangeNotifier {
     String url = "${api.baseURL}?amount=$totalQuestion&category=$categoriesId&difficulty=$difficulty";
     var dio = Dio();
     isLoading = true;
+    print(url);
     try {
       var res = await dio.get(url);
       if (res.statusCode == 200) {

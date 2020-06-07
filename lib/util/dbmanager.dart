@@ -21,6 +21,12 @@ class DbManger{
     await openDatabasee();
     return await database.insert('score', score.toJson());
   }
+
+  Future<int> deleteScore(int id )async {
+    await openDatabasee();
+    return await database.delete('score',where: "id = ? ",whereArgs: [id]);
+  }
+
   Future<List<Score >> getUserScore() async {
     List<Score> arrUserScore = [];
     await openDatabasee();

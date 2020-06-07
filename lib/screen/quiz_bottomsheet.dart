@@ -192,10 +192,13 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
       List<Question> listQuestion = await value.getDataQuestion(
           selectDifficult.toLowerCase(), selectNumber, widget.id);
       Provider.of<QuestionProvider>(context, listen: false).initValue();
+
       if (listQuestion.length == 0) {
         final snackBar = SnackBar(content: Text("Not found question"));
         globalKey.currentState.showSnackBar(snackBar);
       } else {
+
+        Navigator.pop(context); // close show bottom sheet
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -206,6 +209,7 @@ class _QuizBottomSheetState extends State<QuizBottomSheet> {
             ),
           ),
         );
+
       }
     } else {
       final snackBar = SnackBar(

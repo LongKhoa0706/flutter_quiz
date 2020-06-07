@@ -31,12 +31,13 @@ class _QuizPageState extends State<QuizPage> {
     // TODO: implement initState
     super.initState();
     Provider.of<ScoreProvider>(context,listen: false).getAllScore();
-
+    print(widget.listQuestion.length);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<int> abc = List<int>.generate(widget.listQuestion.length, (i) =>i  ); // convert array to int
+    List<int> listQuestionNumber = List<int>.generate(widget.listQuestion.length, (i) =>i  ); // convert array to int
+
     return WillPopScope(
       onWillPop: onBackPress,
       child: Scaffold(
@@ -46,16 +47,14 @@ class _QuizPageState extends State<QuizPage> {
           leading: IconButton(
             onPressed: (){
               buildDialog(context, "Warning!", 'Do you want to cancel this quiz? '
-                  , DialogType.WARNING, ()=>Navigator.pop(context));
+                  , DialogType.WARNING, ()=>Navigator.pop(context),()=> null);
             },
             icon: Icon(Icons.arrow_back_ios),
           ),
           centerTitle: true,
           title: Column(
             children: <Widget>[
-              SizedBox(
-                height: 15,
-              ),
+
               Text(widget.listQuestion[widget.id].category,
                 style: kHeadingTextStyleAppBar.copyWith(
                   color: Colors.white,
@@ -118,25 +117,23 @@ class _QuizPageState extends State<QuizPage> {
                           SingleChildScrollView(
                             child: Row(
                               children: <Widget>[
-                                ...abc.map((e) => SizedBox(
-                                  height: 15,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    child: InkWell(
-                                      onTap: (){
-                                       value.selectQuestion(e);
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 15,right: 10),
-                                        child: Container(
-                                          width: 20,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            color: value.currentIndex == e ? Colors.grey[200] : Color(0xff7146ff),
-                                          ),
-                                          child: Center(
+                                ...listQuestionNumber.map((e) => SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                  child: InkWell(
+                                    onTap: (){
+                                     value.selectQuestion(e);
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 15,right: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: value.currentIndex == e ? Colors.grey[200] : Color(0xff7146ff),
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(7),
                                             child: Text(
                                               e.toString(),
                                               style: TextStyle(
@@ -148,14 +145,14 @@ class _QuizPageState extends State<QuizPage> {
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
                                 )),
                               ],
                             ),
                             scrollDirection: Axis.horizontal,
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -170,42 +167,47 @@ class _QuizPageState extends State<QuizPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20,),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(4, 4),
-                                    blurRadius: 10,
-                                    color: Colors.grey.withOpacity(.2),
-                                  ),
-                                  BoxShadow(
-                                    offset: Offset(-3, 0),
-                                    blurRadius: 15,
-                                    color: Color(0xffb8bfce).withOpacity(.1),
-                                  ),
-                                ],
-                              ),
-                              child:Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  ...listOptions.map((e) =>
-                                      RadioListTile(
-                                        groupValue: value.answer[value.currentIndex],
-                                        activeColor: Colors.red,
-                                        title: Text(HtmlUnescape().convert(e)),
-                                        onChanged: (abc) {
-                                          value.selectRadio(e);
-                                        },
-                                        value: e,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white,
                                       ),
+                                      BoxShadow(
+                                        offset: Offset(10, 10),
+
+                                        color: Colors.grey[200],
+                                      ),
+                                      BoxShadow(
+                                        color: Colors.white,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ) ,
+                                  child:Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      ...listOptions.map((e) =>
+                                          RadioListTile(
+                                            groupValue: value.answer[value.currentIndex],
+                                            activeColor: Colors.red,
+                                            title: Text(HtmlUnescape().convert(e)),
+                                            onChanged: (abc) {
+                                              value.selectRadio(e);
+                                            },
+                                            value: e,
+                                          ),
+                                      ),
+                                    ],
+                                  ) ,
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
@@ -235,7 +237,7 @@ class _QuizPageState extends State<QuizPage> {
                                                           listQuestion: widget.listQuestion,
                                                         ),
                                                     ),
-                                                ),
+                                                ),()=>null,
                                         );
                                     }
                                     else{
@@ -268,7 +270,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Future<bool> onBackPress(){
     return   buildDialog(context, "Warning!", 'Do you want to cancel this quiz? '
-        , DialogType.WARNING, ()=>Navigator.pop(context,true));
+        , DialogType.WARNING, ()=>Navigator.pop(context,true),()=>null);
   }
 }
 class MyClipper extends CustomClipper<Path>{

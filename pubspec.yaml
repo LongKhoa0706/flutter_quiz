@@ -82,6 +82,7 @@ flutter:
     - assets/topic/image20.jpg
     - assets/topic/image21.jpg
     - assets/topic/image22.jpg
+    - empty.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

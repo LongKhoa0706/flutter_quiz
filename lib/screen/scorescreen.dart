@@ -1,6 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterquiz/provider/score_provider.dart';
 import 'package:flutterquiz/util/constant.dart';
+import 'package:flutterquiz/widget/awesomedialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +33,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
             const SizedBox(
               height: 50,
             ),
-            Text("Score History",
+            Text("History Point",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -43,6 +45,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
             ),
             Expanded(
               child: Container(
+                width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40)),
@@ -50,7 +53,24 @@ class _ScoreScreenState extends State<ScoreScreen> {
                 ),
                 child: Consumer<ScoreProvider>(
                   builder: (BuildContext context, ScoreProvider value, Widget child) {
-                    return ListView.builder(
+                    return value.arrScore.isEmpty ? Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset('assets/empty.jpg'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text("Your score not found",style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            letterSpacing: 2.0
+                          ),),
+                        ],
+                      ),
+                    ) : ListView.builder(
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
                       itemCount: value.arrScore.length,
@@ -136,9 +156,18 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                 ),
 
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
+                                    InkWell(
+                                      child: Icon(Icons.close,color: Colors.red,
+                                      ),
+                                      onTap: ()  => 
+                                          buildDialog(context, "Delete", "Do you want to delete this score ? ", DialogType.WARNING, ()=>deleteScore(value, index),()=> null)
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     CircularPercentIndicator(
                                       radius: 100.0,
                                       lineWidth: 13.0,
@@ -166,7 +195,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
       ),
     );
   }
-
+    deleteScore(ScoreProvider value,int index){
+    value.deleteScore(value.arrScore[index].id);
+    value.arrScore.removeAt(index);
+  }
+  
   Color conditionalolor(ScoreProvider value,int index){
     if (value.arrScore[index].score <=10 ) {
       return Colors.red;
@@ -175,5 +208,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
       return Colors.green;
     }
  }
+
+  
 
 }

@@ -17,6 +17,13 @@ class ScoreProvider with ChangeNotifier{
     return score;
   }
 
+  Future deleteScore(int id ) async {
+    await dbManger.deleteScore(id);
+
+    notifyListeners();
+  }
+
+
   Future<List<Score>> getAllScore() async {
    await dbManger.getUserScore().then((value) => {
       arrScore = value

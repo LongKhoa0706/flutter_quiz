@@ -66,11 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10,right:10 ,left: 10),
                             child: InkWell(
-                              onTap: (){
-//                        Provider.of<QuestionProvider>(context,listen: false).getDataQuestion(categories[index].id);
-                                _buildBottomSheet(context,categories[index].name,categories[index].id);
-                              },
-                              child: FadeAnimation(1.5, CardItem(
+                              onTap: ()=>_buildBottomSheet(context,categories[index].name,categories[index].id),
+                              child: FadeAnimation(0.5, CardItem(
                                 index: index,
                               ),)
                             ),
