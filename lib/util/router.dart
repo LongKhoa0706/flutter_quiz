@@ -7,7 +7,7 @@ import 'package:flutterquiz/screen/splash_screen.dart';
 import 'package:flutterquiz/util/router_path.dart';
 
 
-class Router {
+class Routerr {
   static Route<dynamic> generateRouter(RouteSettings settings) {
     switch (settings.name) {
       case SplashScreen:
